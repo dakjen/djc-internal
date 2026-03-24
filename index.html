@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DJC TechPortfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+<style>
+:root{--navy:#1A3A5C;--mauve:#C0748A;--mauve-light:rgba(192,116,138,0.12);--cream:#F7F3EE;--white:#ffffff;--text:#1e1e1e;--muted:#6b7280;--border:rgba(26,58,92,0.1);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:22px 6vw;background:rgba(247,243,238,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);text-decoration:none;}
+.nav-logo span{color:var(--mauve);}
+.nav-link{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--navy);text-decoration:none;font-weight:500;transition:color .2s;}
+.nav-link:hover{color:var(--mauve);}
+
+.hero{min-height:100vh;background:var(--navy);display:flex;flex-direction:column;justify-content:flex-end;padding:0 6vw 80px;position:relative;overflow:hidden;}
+.hero-bg1{position:absolute;width:600px;height:600px;top:-150px;right:-100px;border-radius:50%;background:radial-gradient(circle,rgba(192,116,138,.22) 0%,transparent 65%);pointer-events:none;}
+.hero-bg2{position:absolute;width:800px;height:800px;bottom:-300px;left:-200px;border-radius:50%;background:radial-gradient(circle,rgba(44,82,130,.35) 0%,transparent 65%);pointer-events:none;}
+.hero-eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--mauve);margin-bottom:24px;opacity:0;animation:fadeUp .7s ease forwards .3s;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(52px,8vw,108px);font-weight:900;color:var(--white);line-height:.95;max-width:900px;opacity:0;animation:fadeUp .7s ease forwards .5s;}
+.hero-title em{font-style:italic;color:var(--mauve);}
+.hero-divider{width:60px;height:2px;background:var(--mauve);margin:38px 0;opacity:0;animation:fadeUp .7s ease forwards .7s;}
+.hero-sub{font-size:16px;font-weight:300;color:rgba(255,255,255,.6);max-width:480px;line-height:1.75;opacity:0;animation:fadeUp .7s ease forwards .9s;}
+.hero-count{position:absolute;right:6vw;bottom:80px;display:flex;flex-direction:column;align-items:flex-end;gap:6px;opacity:0;animation:fadeUp .7s ease forwards 1.1s;}
+.hero-count-num{font-family:'Playfair Display',serif;font-size:80px;font-weight:900;color:rgba(255,255,255,.07);line-height:1;}
+.hero-count-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.25);}
+
+.strip{background:var(--mauve);padding:26px 6vw;display:flex;align-items:center;gap:36px;overflow-x:auto;}
+.strip-item{display:flex;align-items:center;gap:10px;white-space:nowrap;flex-shrink:0;}
+.strip-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.45);}
+.strip-text{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.9);font-weight:500;}
+
+.about{padding:120px 6vw;background:var(--white);display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:center;}
+.section-label{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mauve);margin-bottom:14px;font-weight:500;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(30px,3.5vw,48px);font-weight:700;color:var(--navy);line-height:1.15;}
+.section-title em{font-style:italic;color:var(--mauve);}
+.about-right p{font-size:15px;line-height:1.85;color:var(--muted);margin-bottom:18px;}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;}
+.tag{padding:5px 14px;border:1px solid var(--border);border-radius:100px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);font-weight:500;}
+
+.projects{padding:120px 6vw;background:var(--cream);}
+.projects-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
+.ghost-num{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:var(--mauve);opacity:.18;line-height:1;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+
+.card{background:var(--white);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s;border:1px solid var(--border);}
+.card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(26,58,92,.11);}
+.card-preview{height:210px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.card-preview-inner{width:84%;height:84%;border-radius:4px 4px 0 0;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.28);}
+
+.g1{background:linear-gradient(135deg,#0e1f30,#1A3A5C);}
+.g2{background:linear-gradient(135deg,#8b4a5e,#C0748A);}
+.g3{background:linear-gradient(135deg,#1a1a2e,#16213e);}
+.g4{background:linear-gradient(135deg,#1A3A5C,#2c5282);}
+.g5{background:linear-gradient(135deg,#7a3d50,#C0748A);}
+.g6{background:linear-gradient(135deg,#0a1628,#1A3A5C);}
+.g7{background:linear-gradient(135deg,#1e3a5f,#2d5986);}
+.g8{background:linear-gradient(135deg,#6b2f42,#a0546a);}
+.g9{background:linear-gradient(135deg,#111827,#1f2d3d);}
+
+.mock{width:100%;height:100%;padding:14px;display:flex;flex-direction:column;gap:7px;}
+.mock-lbl{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.38);}
+.mock-h{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:rgba(255,255,255,.88);line-height:1.2;margin-bottom:4px;}
+.bar{height:5px;border-radius:3px;background:rgba(255,255,255,.13);}
+.bar.w100{width:100%;} .bar.w80{width:80%;} .bar.w60{width:60%;} .bar.w40{width:40%;}
+.bar.acc{background:rgba(192,116,138,.45);}
+.mrow{display:flex;gap:5px;align-items:center;}
+.mbox{border-radius:2px;background:rgba(255,255,255,.1);}
+.mbtn{margin-top:auto;height:18px;border-radius:2px;background:rgba(192,116,138,.55);width:72px;}
+
+.card-body{padding:26px;flex:1;display:flex;flex-direction:column;}
+.card-num{font-size:10px;letter-spacing:.2em;color:var(--mauve);font-weight:500;margin-bottom:8px;}
+.card-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--navy);margin-bottom:10px;line-height:1.2;}
+.card-desc{font-size:13px;line-height:1.75;color:var(--muted);flex:1;margin-bottom:22px;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:18px;border-top:1px solid var(--border);}
+.card-type{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);}
+.card-link{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);text-decoration:none;transition:color .2s;}
+.card-link:hover{color:var(--mauve);}
+.card-link svg{transition:transform .2s;}
+.card-link:hover svg{transform:translateX(3px);}
+
+.card.featured{grid-column:span 2;flex-direction:row;}
+.card.featured .card-preview{width:44%;flex-shrink:0;height:auto;}
+.card.featured .card-preview-inner{width:88%;height:88%;border-radius:4px;}
+.card.featured .card-body{padding:36px;}
+.card.featured .card-title{font-size:24px;}
+.feat-badge{display:inline-block;padding:4px 12px;background:var(--mauve-light);border-radius:100px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--mauve);font-weight:500;margin-bottom:14px;}
+
+footer{background:var(--navy);padding:80px 6vw 40px;display:flex;flex-direction:column;gap:40px;}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.1);}
+.footer-brand{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--white);}
+.footer-brand span{color:var(--mauve);}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,.38);margin-top:8px;max-width:280px;line-height:1.7;}
+.footer-contact a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:8px;transition:color .2s;}
+.footer-contact a:hover{color:var(--mauve);}
+.footer-bottom{font-size:11px;color:rgba(255,255,255,.18);letter-spacing:.08em;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:960px){.grid{grid-template-columns:1fr 1fr;}.card.featured{grid-column:span 2;flex-direction:column;}.card.featured .card-preview{width:100%;height:200px;}.about{grid-template-columns:1fr;gap:36px;}.footer-top{flex-direction:column;gap:28px;}}
+@media(max-width:600px){.grid{grid-template-columns:1fr;}.card.featured{grid-column:span 1;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">DJC <span>TechPortfolio</span></a>
+  <a href="mailto:dakotah@dakjencreative.com" class="nav-link">Get in Touch →</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg1"></div>
+  <div class="hero-bg2"></div>
+  <p class="hero-eyebrow">DJC TechPortfolio</p>
+  <h1 class="hero-title">Built to<br/><em>perform.</em></h1>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">Custom web platforms, client portals, and digital tools built for real estate, brand strategy, and beyond.</p>
+  <div class="hero-count">
+    <span class="hero-count-num">09</span>
+    <span class="hero-count-label">Live Projects</span>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-item"><div class="strip-dot"></div><span class="strip-text">Custom Web Development</span></div>
+  <div class="strip-item"><div class="strip-dot"></div><span class="strip-text">Client Portals &amp; Platforms</span></div>
+  <div class="strip-item"><div class="strip-dot"></div><span class="strip-text">Real Estate Tech</span></div>
+  <div class="strip-item"><div class="strip-dot"></div><span class="strip-text">Brand Strategy</span></div>
+  <div class="strip-item"><div class="strip-dot"></div><span class="strip-text">Owings Mills, MD</span></div>
+  <div class="strip-item"><div class="strip-dot"></div><span class="strip-text">DakJen Enterprises LLC</span></div>
+</div>
+
+<section class="about">
+  <div class="reveal">
+    <p class="section-label">About</p>
+    <h2 class="section-title">Where <em>strategy</em><br/>meets execution.</h2>
+  </div>
+  <div class="reveal">
+    <p>DakJen Creative LLC is a multidisciplinary creative consulting and brand studio headquartered in Owings Mills, MD. Alongside brand strategy and consulting, we build custom digital tools — portals, platforms, scheduling systems, and marketing sites — tailored to the specific operational needs of our clients.</p>
+    <p>Every project below was designed, developed, and deployed by DakJen Creative, serving clients across real estate development, education, luxury travel, and small business.</p>
+    <div class="tags">
+      <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Vercel</span>
+      <span class="tag">Full-Stack</span><span class="tag">UI/UX Design</span><span class="tag">Client Portals</span>
+    </div>
+  </div>
+</section>
+
+<section class="projects">
+  <div class="projects-header">
+    <div class="reveal">
+      <p class="section-label">Work</p>
+      <h2 class="section-title">Live <em>projects</em></h2>
+    </div>
+    <div class="ghost-num reveal">09</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- 1. FEATURED ResidentFlow -->
+    <div class="card featured reveal">
+      <div class="card-preview g1">
+        <div class="card-preview-inner"><img src="screenshots/ss_residentflow.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
+            <div class="mock-h">Unified Property<br/>Management</div>
+            <div class="bar w100"></div>
+            <div class="bar w80"></div>
+            <div class="mrow">
+              <div class="mbox" style="width:30%;height:30px;"></div>
+              <div class="mbox" style="width:30%;height:30px;"></div>
+              <div class="mbox" style="width:30%;height:30px;"></div>
+            </div>
+            <div class="bar w60"></div>
+            <div class="bar w40 acc"></div>
+            <div class="mbtn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <span class="feat-badge">Featured Project</span>
+        <div class="card-num">01 / 09</div>
+        <h3 class="card-title">ResidentFlow — Property Management Platform</h3>
+        <p class="card-desc">A unified property and asset management system that consolidates leasing, marketing, applications, and ongoing operations into one modern interface. Features a built-in rental application tool, lead tracking, lease-up marketing module, and admin dashboard for reviewing and scoring applicants. Built to scale from first inquiry through approval and ongoing resident management — replacing scattered tools with one clean ecosystem.</p>
+        <div class="card-footer">
+          <span class="card-type">Prop-Tech Platform</span>
+          <a href="https://rentalportal-jade.vercel.app/" target="_blank" class="card-link">View Live <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Design Domain Site -->
+    <div class="card reveal">
+      <div class="card-preview g2">
+        <div class="card-preview-inner"><img src="screenshots/ss_designdomain.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
+            <div class="mock-h">FF&amp;E Done Right.</div>
+            <div class="mrow" style="margin-top:8px;">
+              <div class="mbox" style="width:48%;height:48px;"></div>
+              <div class="mbox" style="width:48%;height:48px;"></div>
+            </div>
+            <div class="bar w80"></div>
+            <div class="bar w60"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">02 / 09</div>
+        <h3 class="card-title">Design Domain — Marketing Site</h3>
+        <p class="card-desc">Full marketing and brand site for Design Domain LLC, a furniture procurement and interior design firm co-founded with NREUV Advisors. Features portfolio galleries, service breakdowns, team pages, and project case studies including 9410 Hough and 825 City Center, D.C.</p>
+        <div class="card-footer">
+          <span class="card-type">Marketing Website</span>
+          <a href="https://designdomain.vercel.app/" target="_blank" class="card-link">View Live <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. FF&E Portal -->
+    <div class="card reveal">
+      <div class="card-preview g3">
+        <div class="card-preview-inner"><img src="screenshots/ss_ffeportal.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
+            <div class="mock-h">FF&amp;E Procurement</div>
+            <div class="bar w100"></div>
+            <div class="bar w80"></div>
+            <div class="mrow">
+              <div class="mbox" style="width:55%;height:26px;"></div>
+              <div class="mbox" style="width:35%;height:26px;background:rgba(192,116,138,.45);"></div>
+            </div>
+            <div class="bar w60"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">03 / 09</div>
+        <h3 class="card-title">Design Domain — FF&amp;E Client Portal</h3>
+        <p class="card-desc">A client-facing web portal for Design Domain's procurement services. Clients and contractors can register, start projects, request quotes, and manage engagements through a secure, multi-role authenticated platform covering the full project lifecycle.</p>
+        <div class="card-footer">
+          <span class="card-type">Client Portal</span>
+          <a href="https://ffeportal.vercel.app/" target="_blank" class="card-link">View Live <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. NREUV Invoicing -->
+    <div class="card reveal">
+      <div class="card-preview g4">
+        <div class="card-preview-inner"><img src="screenshots/ss_nreuv.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
+            <div class="mock-h">Invoice #0042</div>
+            <div class="bar w100"></div>
+            <div class="bar w80"></div>
+            <div class="bar w60"></div>
+            <div class="bar w40 acc"></div>
+            <div class="bar w60"></div>
+            <div class="mbtn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">04 / 09</div>
+        <h3 class="card-title">NREUV — Custom Invoicing Platform</h3>
+        <p class="card-desc">A bespoke invoicing platform built exclusively for NREUV Advisors LLC. Features secure account-based access, invoice generation and tracking, and account request workflows — replacing generic tools with a purpose-built solution tailored to the firm's operations.</p>
+        <div class="card-footer">
+          <span class="card-type">Custom Business Tool</span>
+          <a href="https://nreuv-invoicing.vercel.app/auth/signin" target="_blank" class="card-link">View Live <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. PCC Booking -->
+    <div class="card reveal">
+      <div class="card-preview g5">
+        <div class="card-preview-inner"><img src="screenshots/ss_pcc.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
+            <div class="mock-h">PCC Building</div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:6px;">
+              <div class="mbox" style="height:12px;"></div><div class="mbox" style="height:12px;"></div>
+              <div class="mbox" style="height:12px;background:rgba(255,255,255,.28);"></div>
+              <div class="mbox" style="height:12px;"></div><div class="mbox" style="height:12px;"></div>
+              <div class="mbox" style="height:12px;background:rgba(192,116,138,.6);"></div>
+              <div class="mbox" style="height:12px;"></div>
+              <div class="mbox" style="height:12px;"></div><div class="mbox" style="height:12px;"></div>
+              <div class="mbox" style="height:12px;"></div><div class="mbox" style="height:12px;"></div>
+              <div class="mbox" style="height:12px;"></div><div class="mbox" style="height:12px;"></div>
+              <div class="mbox" style="height:12px;"></div>
+            </div>
+            <div class="bar w100" style="margin-top:6px;"></div>
+            <div class="bar w80"></div>
+            <div class="mbtn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">05 / 09</div>
+        <h3 class="card-title">PCC Building — Room Booking System</h3>
+        <p class="card-desc">A custom room scheduling platform for the 9410 PCC Building. Community members and organizations can browse availability, book rooms for meetings and events, and access entrepreneurship services — with a built-in admin dashboard for reservation management.</p>
+        <div class="card-footer">
+          <span class="card-type">Scheduling Platform</span>
+          <a href="https://booking.ninetyfourten.com/" target="_blank" class="card-link">View Live <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. GroundUp -->
+    <div class="card reveal">
+      <div class="card-preview g6">
+        <div class="card-preview-inner"><img src="screenshots/ss_groundup.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
+            <div class="mock-h">GroundUp</div>
+            <div class="bar w100"></div>
+            <div style="height:5px;border-radius:3px;background:rgba(192,116,138,.4);width:65%;"></div>
+            <div class="bar w80"></div>
+            <div class="bar w60"></div>
+            <div class="bar w40"></div>
+            <div class="mbtn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">06 / 09</div>
+        <h3 class="card-title">GroundUp — Real Estate Course Platform</h3>
+        <p class="card-desc">A custom-built digital course platform developed for a client with 30 years of real estate development expertise. GroundUp delivers structured educational content helping aspiring developers navigate the industry from concept to completion.</p>
+        <div class="card-footer">
+          <span class="card-type">EdTech / Course Platform</span>
+          <a href="https://groundup-tau.vercel.app/" target="_blank" class="card-link">View Live <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Where2Start -->
+    <div class="card reveal">
+      <div class="card-preview g7">
+        <div class="card-preview-inner"><img src="screenshots/ss_where2start.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
+            <div class="mock-h">Where2Start</div>
+            <div class="mrow" style="margin-top:8px;">
+              <div class="mbox" style="width:48%;height:34px;"></div>
+              <div class="mbox" style="width:48%;height:34px;"></div>
+            </div>
+            <div class="mrow">
+              <div class="mbox" style="width:48%;height:34px;"></div>
+              <div class="mbox" style="width:48%;height:34px;"></div>
+            </div>
+            <div class="bar w80"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">07 / 09</div>
+        <h3 class="card-title">Where2Start — Startup Resource Platform</h3>
+        <p class="card-desc">A guided startup resource platform designed to help early-stage founders find the right tools, frameworks, and next steps for launching a business. Structured as a journey-based experience to reduce overwhelm and provide founders with clarity on where to begin.</p>
+        <div class="card-footer">
+          <span class="card-type">Startup Platform</span>
+          <a href="https://bizdev-delta.vercel.app/" target="_blank" class="card-link">View Live <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. DakJen Portal -->
+    <div class="card reveal">
+      <div class="card-preview g8">
+        <div class="card-preview-inner"><img src="screenshots/ss_djcportal.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
+            <div class="mock-h">DJC Operations</div>
+            <div class="bar w100"></div>
+            <div class="bar w80"></div>
+            <div class="mrow">
+              <div class="mbox" style="width:28%;height:22px;"></div>
+              <div class="mbox" style="width:62%;height:22px;background:rgba(255,255,255,.14);"></div>
+            </div>
+            <div class="bar w60"></div>
+            <div class="bar w40 acc"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">08 / 09</div>
+        <h3 class="card-title">DakJen Creative — Internal Team Portal</h3>
+        <p class="card-desc">A proprietary internal operations portal built for the DakJen Creative team. Centralizes team workflows, internal communications, and project management across all six service lines — purpose-built to support a growing multi-vertical consulting operation.</p>
+        <div class="card-footer">
+          <span class="card-type">Internal Operations Tool</span>
+          <a href="https://portal.dakjencreative.com/" target="_blank" class="card-link">View Live <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. Benny -->
+    <div class="card reveal">
+      <div class="card-preview g9">
+        <div class="card-preview-inner"><img src="screenshots/ss_benny.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
+            <div style="width:44px;height:44px;border-radius:50%;background:rgba(192,116,138,.25);border:1px solid rgba(192,116,138,.4);margin:4px auto;"></div>
+            <div class="mock-h" style="font-size:14px;">Benjamin's 25th 🎉</div>
+            <div class="bar w80"></div>
+            <div class="bar w60"></div>
+            <div class="mbtn" style="margin:0 auto;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">09 / 09</div>
+        <h3 class="card-title">Benjamin's 25th — Birthday Scavenger Hunt</h3>
+        <p class="card-desc">A fully custom interactive birthday experience built as a digital scavenger hunt. Features code validation logic, admin management, and a personalized narrative — proof that DakJen Creative builds for every occasion, not just enterprise.</p>
+        <div class="card-footer">
+          <span class="card-type">Interactive Experience</span>
+          <a href="https://benny-phi.vercel.app/" target="_blank" class="card-link">View Live <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">DJC <span>TechPortfolio</span></div>
+      <p class="footer-tagline">Brand strategy, creative consulting, and custom digital solutions — Owings Mills, MD.</p>
+    </div>
+    <div class="footer-contact">
+      <a href="mailto:dakotah@dakjencreative.com">dakotah@dakjencreative.com</a>
+      <a href="https://dakjencreative.com" target="_blank">dakjencreative.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 DakJen Creative LLC · DakJen Enterprises LLC · All rights reserved.</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

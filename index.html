@@ -45,12 +45,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .projects{padding:120px 6vw;background:var(--cream);}
 .projects-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
 .ghost-num{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:var(--mauve);opacity:.18;line-height:1;}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
 
 .card{background:var(--white);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s;border:1px solid var(--border);}
 .card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(26,58,92,.11);}
-.card-preview{height:210px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.card-preview-inner{width:84%;height:84%;border-radius:4px 4px 0 0;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.28);}
+.card-preview{height:420px;position:relative;overflow:hidden;cursor:zoom-in;}
+.card-preview-inner{width:100%;height:100%;overflow:hidden;position:relative;}
 
 .g1{background:linear-gradient(135deg,#0e1f30,#1A3A5C);}
 .g2{background:linear-gradient(135deg,#8b4a5e,#C0748A);}
@@ -84,10 +84,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .card-link:hover svg{transform:translateX(3px);}
 
 .card.featured{grid-column:span 2;flex-direction:row;}
-.card.featured .card-preview{width:44%;flex-shrink:0;height:auto;}
-.card.featured .card-preview-inner{width:88%;height:88%;border-radius:4px;}
-.card.featured .card-body{padding:36px;}
-.card.featured .card-title{font-size:24px;}
+.card.featured .card-preview{width:55%;flex-shrink:0;height:auto;min-height:480px;}
+.card.featured .card-preview-inner{width:100%;height:100%;}
+.card.featured .card-body{padding:40px;}
+.card.featured .card-title{font-size:26px;}
 .feat-badge{display:inline-block;padding:4px 12px;background:var(--mauve-light);border-radius:100px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--mauve);font-weight:500;margin-bottom:14px;}
 
 footer{background:var(--navy);padding:80px 6vw 40px;display:flex;flex-direction:column;gap:40px;}
@@ -103,8 +103,25 @@ footer{background:var(--navy);padding:80px 6vw 40px;display:flex;flex-direction:
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 
-@media(max-width:960px){.grid{grid-template-columns:1fr 1fr;}.card.featured{grid-column:span 2;flex-direction:column;}.card.featured .card-preview{width:100%;height:200px;}.about{grid-template-columns:1fr;gap:36px;}.footer-top{flex-direction:column;gap:28px;}}
-@media(max-width:600px){.grid{grid-template-columns:1fr;}.card.featured{grid-column:span 1;}}
+/* Slideshow */
+.slideshow{position:relative;width:100%;height:100%;}
+.slideshow img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:top;display:block;opacity:0;transition:opacity .6s ease;}
+.slideshow img.active{opacity:1;}
+.slide-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:2;}
+.slide-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;border:none;padding:0;transition:background .2s;}
+.slide-dot.active{background:rgba(255,255,255,.95);}
+.slide-zone{position:absolute;top:0;width:30%;height:100%;z-index:1;cursor:pointer;}
+.slide-zone.prev{left:0;}.slide-zone.next{right:0;}
+
+@media(max-width:960px){.grid{grid-template-columns:1fr;}.card.featured{grid-column:span 1;flex-direction:column;}.card.featured .card-preview{width:100%;min-height:340px;}.card-preview{height:340px;}.about{grid-template-columns:1fr;gap:36px;}.footer-top{flex-direction:column;gap:28px;}}
+@media(max-width:600px){.grid{grid-template-columns:1fr;}.card.featured{grid-column:span 1;}.card-preview{height:260px;}.card.featured .card-preview{min-height:260px;}}
+
+/* Lightbox */
+.lightbox{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.88);align-items:center;justify-content:center;cursor:zoom-out;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:92vw;max-height:90vh;object-fit:contain;border-radius:4px;box-shadow:0 30px 80px rgba(0,0,0,.5);}
+.lightbox-close{position:fixed;top:24px;right:28px;font-size:28px;color:#fff;background:none;border:none;cursor:pointer;opacity:.7;line-height:1;}
+.lightbox-close:hover{opacity:1;}
 </style>
 </head>
 <body>
@@ -195,16 +212,7 @@ footer{background:var(--navy);padding:80px 6vw 40px;display:flex;flex-direction:
     <!-- 2. Design Domain Site -->
     <div class="card reveal">
       <div class="card-preview g2">
-        <div class="card-preview-inner"><img src="screenshots/ss_designdomain.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
-            <div class="mock-h">FF&amp;E Done Right.</div>
-            <div class="mrow" style="margin-top:8px;">
-              <div class="mbox" style="width:48%;height:48px;"></div>
-              <div class="mbox" style="width:48%;height:48px;"></div>
-            </div>
-            <div class="bar w80"></div>
-            <div class="bar w60"></div>
-          </div>
-        </div>
+        <div class="card-preview-inner"><div class="slideshow"><img src="screenshots/ss_designdomain.png" alt="Design Domain hero" class="active"><img src="screenshots/ss_designdomain_2.png" alt="Design Domain services"><img src="screenshots/ss_designdomain_3.png" alt="Design Domain portfolio"><div class="slide-dots"><button class="slide-dot active"></button><button class="slide-dot"></button><button class="slide-dot"></button></div><div class="slide-zone prev"></div><div class="slide-zone next"></div></div></div>
       </div>
       <div class="card-body">
         <div class="card-num">02 / 09</div>
@@ -220,17 +228,7 @@ footer{background:var(--navy);padding:80px 6vw 40px;display:flex;flex-direction:
     <!-- 3. FF&E Portal -->
     <div class="card reveal">
       <div class="card-preview g3">
-        <div class="card-preview-inner"><img src="screenshots/ss_ffeportal.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
-            <div class="mock-h">FF&amp;E Procurement</div>
-            <div class="bar w100"></div>
-            <div class="bar w80"></div>
-            <div class="mrow">
-              <div class="mbox" style="width:55%;height:26px;"></div>
-              <div class="mbox" style="width:35%;height:26px;background:rgba(192,116,138,.45);"></div>
-            </div>
-            <div class="bar w60"></div>
-          </div>
-        </div>
+        <div class="card-preview-inner"><div class="slideshow"><img src="screenshots/ss_ffeportal.png" alt="FF&amp;E Portal register" class="active"><img src="screenshots/ss_ffeportal_2.png" alt="FF&amp;E Portal contractor dashboard"><img src="screenshots/ss_ffeportal_3.png" alt="FF&amp;E Portal admin dashboard"><div class="slide-dots"><button class="slide-dot active"></button><button class="slide-dot"></button><button class="slide-dot"></button></div><div class="slide-zone prev"></div><div class="slide-zone next"></div></div></div>
       </div>
       <div class="card-body">
         <div class="card-num">03 / 09</div>
@@ -304,16 +302,7 @@ footer{background:var(--navy);padding:80px 6vw 40px;display:flex;flex-direction:
     <!-- 6. GroundUp -->
     <div class="card reveal">
       <div class="card-preview g6">
-        <div class="card-preview-inner"><img src="screenshots/ss_groundup.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
-            <div class="mock-h">GroundUp</div>
-            <div class="bar w100"></div>
-            <div style="height:5px;border-radius:3px;background:rgba(192,116,138,.4);width:65%;"></div>
-            <div class="bar w80"></div>
-            <div class="bar w60"></div>
-            <div class="bar w40"></div>
-            <div class="mbtn"></div>
-          </div>
-        </div>
+        <div class="card-preview-inner"><div class="slideshow"><img src="screenshots/ss_groundup.png" alt="GroundUp hero" class="active"><img src="screenshots/ss_groundup_2.png" alt="GroundUp courses"><img src="screenshots/ss_groundup_3.png" alt="GroundUp course detail"><img src="screenshots/ss_groundup_4.png" alt="GroundUp about"><img src="screenshots/ss_groundup_5.png" alt="GroundUp pricing"><div class="slide-dots"><button class="slide-dot active"></button><button class="slide-dot"></button><button class="slide-dot"></button><button class="slide-dot"></button><button class="slide-dot"></button></div><div class="slide-zone prev"></div><div class="slide-zone next"></div></div></div>
       </div>
       <div class="card-body">
         <div class="card-num">06 / 09</div>
@@ -357,18 +346,7 @@ footer{background:var(--navy);padding:80px 6vw 40px;display:flex;flex-direction:
     <!-- 8. DakJen Portal -->
     <div class="card reveal">
       <div class="card-preview g8">
-        <div class="card-preview-inner"><img src="screenshots/ss_djcportal.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
-            <div class="mock-h">DJC Operations</div>
-            <div class="bar w100"></div>
-            <div class="bar w80"></div>
-            <div class="mrow">
-              <div class="mbox" style="width:28%;height:22px;"></div>
-              <div class="mbox" style="width:62%;height:22px;background:rgba(255,255,255,.14);"></div>
-            </div>
-            <div class="bar w60"></div>
-            <div class="bar w40 acc"></div>
-          </div>
-        </div>
+        <div class="card-preview-inner"><div class="slideshow"><img src="screenshots/ss_djcportal.png" alt="DakJen Portal landing" class="active"><img src="screenshots/ss_djcportal_2.png" alt="DakJen Portal spend dashboard"><div class="slide-dots"><button class="slide-dot active"></button><button class="slide-dot"></button></div><div class="slide-zone prev"></div><div class="slide-zone next"></div></div></div>
       </div>
       <div class="card-body">
         <div class="card-num">08 / 09</div>
@@ -384,14 +362,7 @@ footer{background:var(--navy);padding:80px 6vw 40px;display:flex;flex-direction:
     <!-- 9. Benny -->
     <div class="card reveal">
       <div class="card-preview g9">
-        <div class="card-preview-inner"><img src="screenshots/ss_benny.png" alt="Project screenshot" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='rgba(255,255,255,0.05)'"></div>
-            <div style="width:44px;height:44px;border-radius:50%;background:rgba(192,116,138,.25);border:1px solid rgba(192,116,138,.4);margin:4px auto;"></div>
-            <div class="mock-h" style="font-size:14px;">Benjamin's 25th 🎉</div>
-            <div class="bar w80"></div>
-            <div class="bar w60"></div>
-            <div class="mbtn" style="margin:0 auto;"></div>
-          </div>
-        </div>
+        <div class="card-preview-inner"><div class="slideshow"><img src="screenshots/ss_benny.png" alt="Benny main page" class="active"><img src="screenshots/ss_benny_2.png" alt="Benny admin dashboard"><img src="screenshots/ss_benny_3.png" alt="Benny manage games"><div class="slide-dots"><button class="slide-dot active"></button><button class="slide-dot"></button><button class="slide-dot"></button></div><div class="slide-zone prev"></div><div class="slide-zone next"></div></div></div>
       </div>
       <div class="card-body">
         <div class="card-num">09 / 09</div>
@@ -421,6 +392,11 @@ footer{background:var(--navy);padding:80px 6vw 40px;display:flex;flex-direction:
   <div class="footer-bottom">© 2026 DakJen Creative LLC · DakJen Enterprises LLC · All rights reserved.</div>
 </footer>
 
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">✕</button>
+  <img src="" id="lightboxImg" alt="">
+</div>
+
 <script>
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -428,6 +404,52 @@ const obs = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* Slideshow */
+document.querySelectorAll('.slideshow').forEach(ss => {
+  const imgs = ss.querySelectorAll('img');
+  const dots = ss.querySelectorAll('.slide-dot');
+  if (imgs.length < 2) return;
+  let cur = 0, timer;
+
+  function go(i) {
+    imgs[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    cur = (i + imgs.length) % imgs.length;
+    imgs[cur].classList.add('active');
+    dots[cur].classList.add('active');
+  }
+
+  function start() { timer = setInterval(() => go(cur + 1), 4000); }
+  function stop() { clearInterval(timer); }
+
+  dots.forEach((d, i) => d.addEventListener('click', () => { stop(); go(i); start(); }));
+  const prev = ss.querySelector('.slide-zone.prev');
+  const next = ss.querySelector('.slide-zone.next');
+  if (prev) prev.addEventListener('click', () => { stop(); go(cur - 1); start(); });
+  if (next) next.addEventListener('click', () => { stop(); go(cur + 1); start(); });
+
+  ss.addEventListener('mouseenter', stop);
+  ss.addEventListener('mouseleave', start);
+  start();
+});
+
+/* Lightbox */
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightboxImg');
+document.getElementById('lightboxClose').addEventListener('click', () => lb.classList.remove('open'));
+lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+
+document.querySelectorAll('.card-preview').forEach(preview => {
+  preview.addEventListener('click', () => {
+    const active = preview.querySelector('img.active, img:first-of-type');
+    if (active && active.src) {
+      lbImg.src = active.src;
+      lb.classList.add('open');
+    }
+  });
+});
 </script>
 </body>
 </html>
